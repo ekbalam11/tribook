@@ -1,81 +1,78 @@
-// importar módulos de terceros
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const session = require('express-session')
-
-//método para cargar variables de entorno
+const session = require('express-session');
+const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv');
-dotenv.config();
-//console.log(process.env) // remove this after you've confirmed it is working
+dotenv.config()
 
-// Importar rutas públicas
+//public routes
 const indexRoutes = require('./routes/index.js');
-
-// Importar las rutas de administrador
+//admin routes
 const adminRoutes = require('./routes/admin.js');
-
-// Crear rutas de autentificación
+//auto routes
 const authRoutes = require('./routes/auth.js');
 
-// creamos una instancia del servidor Express
+//Express server instance
 const app = express();
 
-// Tenemos que usar un nuevo middleware para indicar a Express que queremos procesar peticiones de tipo POST
+//Middleware to process post requests with Express
 app.use(express.urlencoded({ extended: true }));
 
-//Configurar sesión
+//Session config
 app.use(session({
     secret: 'miSecretoSuperSecreto',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } //secure: true en producción con HTTPS
+    cookie: { secure: false } //secure: true in production with HTTPS
 }))
 
 app.use((req, res, next) => {
-    //La variable req.locals es una variable "global" de tipo objeto a la que todas las vistas pueden acceder
-    res.locals.isAdmin = req.session.isAuthenticated; //Por defecto no soy usuario admin.
-
-    // Tenemos que ejecutar next() para que la petición HTTP siga su curso
+    res.locals.isAdmin = req.session.isAuthenticated; 
     next();
- })
+ });
 
-// Añadimos el middleware necesario para que el client puedo hacer peticiones GET a los recursos públicos de la carpeta 'public'
+//Moddleware for the get requests to be public
 app.use(express.static('public'));
 
-const PORT = process.env.PORT || 3000;
-
-// Especificar a Express que quiero usar EJS como motor de plantillas
+//EJS as template engine
 app.set('view engine', 'ejs');
 
-// Usamos el middleware morgan para loguear las peticiones del cliente
+//Middleware morgan for client requests
 app.use(morgan('tiny'));
 
-// Añadimos las rutas de Index.js en nuestra app
-// El primer parámetro significa que todas las rutas que se encuentren en 'indexRouter' estarán prefijados por '/'
-
-//Middleware para proteger las rutas de administrador
-app.use('/admin', (req, res, next) => { //Miramos si el usuario está autentificado
+//Middleware to protect admin routes
+app.use('/admin', (req, res, next) => {
     if (req.session.isAuthenticated){
-        res.locals.isAdmin = true; //Si es que si, establecemos que es de tipo admin
+        res.locals.isAdmin = true;
         next()
-    } else { //En caso contrario, lo llevamos a la vista de login
+    } else {
         res.redirect('/login')
-    }
+}
 })
 
-
+//routes 
 app.use('/', indexRoutes);
 app.use('/admin', adminRoutes);
 app.use(authRoutes); //'./routes/auth.js'
 
+
+//Mongoose connection:
 async function connectDB() {
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Conectado a la base de datos');
-}
+    console.log('Connected to the database');
+};
+connectDB().catch(err => console.log(err));
 
-connectDB().catch(err => console.log(err))
+//Cloudinary config
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
+
+
+//Server init
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, (req, res) => {
-    console.log("Servidor escuchando correctamente en el puerto " + PORT);
-});
+    console.log("Server listening correctly in port: " + PORT);
+    
+})
