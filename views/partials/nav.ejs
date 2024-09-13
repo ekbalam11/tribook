@@ -1,0 +1,32 @@
+<div class="container"></div>
+    <nav>
+            <div class="header-text">
+                <!-- <p id="who_i_am">Who am I?</p> -->
+                <a href="/">
+                    <p id="tribook">Tribook</p>
+                </a>
+                <span id="slogan">Tu casa | Tu cueva | Tu nido</span>
+            </div>
+        <!-- <a href="/"><img src="/img/hornero-logo.jpg" class="logo" alt ="logo"></a> -->
+        <ul>
+            <li><a href="/">Encuentra tu hogar</a></li>
+            <!-- <li><a href="/portfolio">Portfolio</a></li> -->
+            <% if(isAdmin) { %>
+            <li><a href="/admin/apartment/new-apartment">Añadir anuncio</a></li>
+            <% } else { %>
+            <li><a href="/">Regístrate</a></li>   
+            <% } %>   
+        </ul>
+        <p class="login-text"> <% if(isAdmin) { %>
+            <p><a href="/logout" class="button-logout">Logout</a></p>
+            <h1 class="welcome-sign">Bienvenido "${USER}" </h1>
+            <% } else { %> 
+              <a class="btn" id="login-btn" href="/login">Login</a> 
+            <% } %> 
+        
+          <!-- <div><a href="/admin/apartment/new-apartment"><span>Publica un nuevo anuncio</span></a> -->
+          <!-- <a href="/admin/apartment/66d0b1159ef8610c446c79c0/edit"><span>Edita tu anuncio</span></a></div> -->
+          </div>
+    </nav>
+
+</div>

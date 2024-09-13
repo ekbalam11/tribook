@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>🐆-Tribook</title>
+        <%- include('./partials/head.ejs') %>
+    </head>
+
+<body>
+    
+<div id="header">
+    <%- include('./partials/nav.ejs') %>
+</div>
+
+<!-- --------------------------gallery -->
+<section class="gallery-section">
+    <div class="gallery-form">
+        <form class="search-form" action="/search" method="get">
+            <label for="maxPrice">¿Cuanto estás dispuesto a pagar por tu nuevo hogar?</label>
+            <input type="number" name="maxPrice" id="maxPrice" placeholder="precio max por noche" min="0" max="100000">
+            <input class="btn" type="submit" value="Filtrar">
+        </form>
+    </div>
+    <div class="gallery">
+        <% for (const ap of apartments) { %>
+            <a href="/apartment/<%= ap._id %>">
+                <article class="photo-article">
+                    <header class="photo-title">
+                        <p><%= ap.title %></p>
+                    </header>
+                    <div class="photo-frame">
+                        <img class="photo" src="<%= ap.photo %>" alt="">
+                    </div>
+                    <footer class="photo-footer">
+                        <p class="photo-description"><%= ap.description %></p>
+                        <p class="photo-price">$<%= ap.price %>*noche</p>
+
+                        <div class="size-coordinates">
+                            <p class="photo-size"><%= ap.squareMeters %>m2</p>
+                            <div class="coordinates">
+                                <p id="latitude">Latitud: <%= ap.coordinates.latitude %></p>
+                                <p id="longitude">Longitud: <%= ap.coordinates.longitude %></p>
+                            </div>
+                        </div>
+                        <span class="tag"><%= ap.type[0] %></span>
+                        <% if(ap.type[1]) { %>
+                            <span class="tag"><%= ap.type[1] %></span>
+                            <% } %>
+                    </footer>
+                </article>
+
+            </a>
+        <% } %>
+    </div>
+</section>
+
+
+
+<!------------------ maps ----------------->
+<div id="map">
+    <iframe width="425" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=2.180120944976807%2C41.42314791802191%2C2.201299667358399%2C41.442838972931746&amp;layer=mapnik&amp;marker=41.43299419211502%2C2.1907103061676025" style="border: 1px solid black"></iframe><br/><small>
+        <span class="btn">
+            <a id="map-text" href="https://www.openstreetmap.org/?mlat=41.4330&amp;mlon=2.1907#map=16/41.4330/2.1907">Ver el mapa en otra ventana</a></small>
+        </span>
+</div>
+
+
+
+
+
+<script>
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>🐆-Tribook</title>
+    <%- include('./partials/head') %>
+</head>
+
+<div id="header">
+  <%- include('./partials/nav.ejs') %>
+</div>
+
+<body>
+    <article class="apartment">
+        <h1><%= selectedApartment.title %></h1>
+        <header><%= selectedApartment.price %> $ por noche</header>
+        <img src="<%= selectedApartment.photo %>" alt="Foto del apartamento">
+        <div><%= selectedApartment.description %></div>
+        <footer><%= selectedApartment.squareMeters %><sup>m2</sup></footer>
+    </article>
+    <footer>
+    <% if (isAdmin) { %>
+        <a href="/admin/<%= selectedApartment._id %>/edit/">Edita este anuncio</a>
+        <% } else { %> <!-- Si el usuario no es admin -->
+        <!-- To do 1. Crear los controles de formulario necesarios para realizar la reserva: email, fecha de inicio, fecha de fin.
+        Este formulario debería realizar una petición de tipo POST a /apartment/new-reservation. Acordaos que hay que pasar el identificador del apartamento en un <input:hidden>. ***Mirar la vista new-apartment.ejs -->
+        <h2>Nueva reserva</h2>
+        <form action="/apartment/new-reservation" method="POST">
+          <input type="hidden" name="idApartment" value="<%= selectedApartment._id %>">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required>
+          <label for="startDate">Fecha de inicio</label>
+          <input type="date" name="startDate" id="startDate" required>
+          <label for="endDate">Fecha de fin</label>
+          <input type="date" name="endDate" id="endDate">
+          <input type="submit" value="Reservar">          
+        </form>
+            <p>Mostrar botón de reservar con sus campos de fecha de inicio... fecha de fin, etc... </p>
+            <% } %>
+    </footer>
+</body>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>🐆-Balam Castro</title>
+    <%- include('./partials/head') %>
+
+</head>
+
+<body>
+    <header>
+        <%- include('./partials/nav.ejs') %>
+    </header>
+    <!-- <button id="upload_widget" class="cloudinary-button">Subir fotos</button> -->
+    <div class="container">
+        <form action="/admin/apartment/new-apartment" method="POST">
+            <label for="title">Nombre del anuncio</label>
+            <input type="text" id="id" name="id" value="<%= apartment.id %>" hidden>
+            <input type="text" name="title" id="title" required maxlength="20" value="<%= apartment.title %>">
+            <!-- ------------------------Tipo de vivienda -->
+            <label for="category">Categoría:</label>
+            <div class="checkboxes">
+                    <input type="checkbox" id="casa" name="type" value="casa">
+                    <label for="casa">Casa</label>
+                    <input type="checkbox" id="apartamento" name="type" value="apartamento">
+                    <label for="apartamento">Apartamento</label>
+                    <input type="checkbox" id="cueva" name="type" value="cueva">
+                    <label for="cueva">Cueva</label>
+                    <input type="checkbox" id="nido" name="type" value="nido">
+                    <label for="nido">Nido</label>
+                    <input type="checkbox" id="habitacion" name="type" value="habitacion">
+                    <label for="habitacion">Habitación</label>
+                    <input type="checkbox" id="chalet" name="type" value="chalet">
+                    <label for="chalet">Chalet</label>
+                    <input type="checkbox" id="palacio" name="type" value="palacio">
+                    <label for="palacio">Palacio</label>
+                    <input type="checkbox" id="other" name="type" value="otro">
+                    <label for="otro">Otros</label>
+            </div>
+            <!-- ------------------------------Description -->
+            <label for="description">Descripción del apartamento</label>
+            <textarea name="description" rows="5" id="description" placeholder="Describe el hogar que ofreces..."></textarea>
+            <!-- ---------------------------------Price -->
+            <label for="price">Precio</label>
+            <input type="number" name="price" id="price" required>
+            <!-- ------------------------------------Area -->
+            <label for="squareMeters">Superficie (m2)</label>
+            <input type="number" name="squareMeters" id="squareMeters" min="10" required>
+            <!-- -----------------------------------------Rules -->
+            <label for="rules">Se permite:</label>
+            <div class="checkboxes">
+                <input type="checkbox" id="pets" name="pets" value="pets">
+                <label for="pets">Mascotas</label>
+                <input type="checkbox" id="parties" name="parties" value="parties">
+                <label for="parties">Fiestas</label>
+                <input type="checkbox" id="smoking" name="smoking" value="smoking">
+                <label for="smoking">Fumar</label>
+                <input type="checkbox" id="music" name="music" value="music">
+                <label for="music">Música fuerte</label>    
+            </div>
+            <!-- ---------------------------------Rooms -->
+            <label for="rooms">Habitaciones</label>
+            <input type="number" name="rooms" id="rooms" min="1" required>
+            <!-- --------------------------------------Bathrooms -->
+             <label for="bathrooms">Baños</label>
+             <input type="number" name="bathrooms" id="bathrooms">
+            <!-- ------------------------------------------Persons -->
+             <label for="persons">No. max de personas</label>
+             <input type="number" name="persons" id="persons" min="1" required>
+            <!-- -----------------------Photo -->
+            <div class="photo-upload">
+                <label for="photo">Carga una foto desde tu dispositivo</label>
+                <button id="upload_widget" class="cloudinary-button">Cargar foto</button>
+                <label for="photo">Agrega una URL con la foto de tu apartamento</label>
+                <input type="url" name="photo" id="photo">
+            </div>
+            <!-- ---------------------------Amenities -->
+            <label for="amenities">¿Qué hay en la vivienda?</label>
+            <div class="checkboxes">
+                <input type="checkbox" name="wifi" id="wifi" value="wifi">
+                <label for="wifi">Wi-Fi</label>
+                <input type="checkbox" name="airConditioner" id="airConditioner" value="airConditioner">
+                <label for="airConditioner">Aire Acondicionado</label>
+                <input type="checkbox" name="kitchen" id="kitchen" value="kitchen">
+                <label for="kitchen">Cocina</label>
+                <input type="checkbox" name="disability" id="disability" value="disability">
+                <label for="disability">Acceso para silla de ruedas</label>
+                <input type="checkbox" name="heater" id="heater" value="heater">
+                <label for="heater">Calefacción</label>
+                <input type="checkbox" name="tv" id="tv" value="tv">
+                <label for="tv">Televisión</label>
+            </div>
+            <!-------------------- Coordenadas-->
+            <div class="coordinates-fields">
+                <label for="country">País: (Pendiente el menú de países)</label>
+                <input type="text" id="country" name="country" placeholder="Obligatorio" required>
+                <label for="province">Provincia:</label>
+                <input type="text" id="province" name="province" placeholder="Opcional">
+                <label for="city">Ciudad:</label>
+                <input type="text" id="city" name="city" placeholder="Opcional">
+                <label for="coordinates">Coordenadas</label>
+                <label for="longitude">Longitud</label>
+                <input type="number" id="longitude" name="longitude" step="any" placeholder="105.45">
+                <label for="latitude">Latitud</label>
+                <input type="number" id="latitude" name="latitude" step="any" placeholder="41.13">
+            </div>
+            <input class="btn" type="submit" value="Agregar anuncio">
+        </form>
+    </div>
+
+    <script src="https://upload-widget.cloudinary.com/latest/global/all.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        const cloudName = '<%= cloudName %>'
+        const uploadPreset = '<%= uploadPreset %>'
+
+var myWidget = cloudinary.createUploadWidget({
+        cloudName: cloudName,
+        uploadPreset: uploadPreset
+    }, (error, result) => {
+        if (!error && result && result.event === "success"){
+            console.log('Done! Here is the image info: ', result.info);
+        }
+    });
+    
+document.getElementById("upload_widget").addEventListener("click", function () {
+    myWidget.open();
+}, false);
+    </script>
+
+</body>
+
+</html>

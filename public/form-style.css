@@ -1,0 +1,55 @@
+
+/* ------------------------------------------form */
+.container label[for=category] {
+    font-weight: 500;
+    padding-right: 3rem;
+    color: lightblue;
+}
+.photo-upload{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: .5rem;
+}
+.photo-upload button{
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  width: 25%;
+  background-color: darkcyan;
+  color: black;
+}
+.checkboxes {
+    display: inline-flex;
+    align-items: baseline;
+    justify-content: left;
+  }
+  
+  .checkboxes label {
+    display: inline-flex; /* Keep label and checkbox on the same line */
+    justify-content: baseline;
+    align-items: center; /* Vertically center the checkbox and label text */
+    margin-right: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .checkboxes input[type="checkbox"] {
+    margin-right: 5px; 
+  }
+  #subir-foto-url{
+    font-size: 1.5rem;
+    font-weight: 600;
+    width: 25%;
+    background-color: darkcyan;
+    color: black;
+  }
+  .coordinates-fields{
+    display: flex;
+    flex-direction: column;
+  }
+  .coordinates-fields label[for="coordinates"] {
+    margin: 1rem 0 1rem 0;
+    text-align: center;
+    font-size: 2rem;
+    text-transform: uppercase;
+  }
