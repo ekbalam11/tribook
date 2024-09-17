@@ -29,7 +29,7 @@
 .photo-article {
     padding: 1rem;
     /* aspect-ratio: 3 / 2; */
-    height: 550px; /* Adjust as needed */
+    height: 750px; /* Adjust as needed */
     margin-bottom: 20px;
     /*overflow: hidden;  Crop images */
     background-color: rgb(164, 164, 164);
@@ -117,4 +117,32 @@ a:-webkit-any-link{
 		0 1px 1px rgba(0,0,0,.1);
 	z-index:100;
 }
-
+.rules{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+#pets-allowed{
+  color: darkolivegreen;
+}
+#pets-prohibited{
+  color: darkred;
+}
+#parties-allowed{
+  color: darkolivegreen;
+}
+#parties-prohibited{
+  color: darkred;
+}
+#smoking-allowed{
+  color: darkolivegreen;
+}
+#smoking-prohibited{
+  color: darkred;
+}
+#music-allowed{
+  color: darkolivegreen;
+}
+#music-prohibited{
+  color: darkred;
+}

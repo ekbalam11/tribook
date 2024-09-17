@@ -57,10 +57,10 @@ const postNewApartment = async (req, res) => {
     console.log('coordinates: ', coordinates);
 
     const rules = {
-        pets: pets,
-        parties: parties,
-        smoking: smoking,
-        music: music
+        pets: req.body['rules.pets'] === 'true',
+        parties: req.body['rules.parties'] === 'true',
+        smoking: req.body['rules.smoking'] === 'true',
+        music: req.body['rules.music'] === 'true',
     };
     const amenities = {
         wifi: wifi,
@@ -79,7 +79,7 @@ const postNewApartment = async (req, res) => {
         description: req.body.description,
         price: req.body.price,
         squareMeters: req.body.squareMeters,
-        rules: req.body.rules,
+        rules: rules,
         rooms: req.body.rooms,
         bathrooms: req.body.bathrooms,
         persons: req.body.persons,

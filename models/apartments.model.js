@@ -10,7 +10,7 @@ const apartmentSchema = new Schema({
     },
     type: {
         type: [String],
-        enum: ['casa', 'apartamento', 'cueva', 'nido', 'habitación', 'chalet', 'palacio', 'otro'],
+        enum: ['casa', 'apartamento', 'cueva', 'nido', 'habitacion', 'chalet', 'palacio', 'otro'],
         required: true
     },
     description: {

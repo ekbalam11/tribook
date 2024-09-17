@@ -32,8 +32,37 @@
                     </div>
                     <footer class="photo-footer">
                         <p class="photo-description"><%= ap.description %></p>
+                        <div class="rules">
+                            <div class="pets-rules">
+                                <% if(ap.rules.pets) { %>
+                                    <i class="fa-solid fa-dog" id="pets-allowed"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-dog" id="pets-prohibited"></i>
+                                <% } %>
+                            </div>
+                            <div class="parties-rules">
+                                <% if(ap.rules.parties) { %>
+                                    <i class="fa-solid fa-champagne-glasses" id="parties-allowed"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-champagne-glasses" id="parties-prohibited"></i>
+                                <% } %>
+                            </div>
+                            <div class="smoking-rules">
+                                <% if(ap.rules.smoking) { %>
+                                    <i class="fa-solid fa-smoking" id="smoking-allowed" ></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-smoking" id="smoking-prohibited"></i>
+                                <% } %>
+                            </div>
+                            <div class="music-rules">
+                                <% if(ap.rules.music) { %>
+                                    <i class="fa-solid fa-music" id="music-allowed"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-music" id="music-prohibited"></i>
+                                <% } %>
+                            </div>
+                        </div>   
                         <p class="photo-price">$<%= ap.price %>*noche</p>
-
                         <div class="size-coordinates">
                             <p class="photo-size"><%= ap.squareMeters %>m2</p>
                             <div class="coordinates">
@@ -44,7 +73,7 @@
                         <span class="tag"><%= ap.type[0] %></span>
                         <% if(ap.type[1]) { %>
                             <span class="tag"><%= ap.type[1] %></span>
-                            <% } %>
+                        <% } %>
                     </footer>
                 </article>
 
