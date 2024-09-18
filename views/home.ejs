@@ -16,8 +16,17 @@
     <div class="gallery-form">
         <form class="search-form" action="/search" method="get">
             <label for="maxPrice">¿Cuanto estás dispuesto a pagar por tu nuevo hogar?</label>
-            <input type="number" name="maxPrice" id="maxPrice" placeholder="precio max por noche" min="0" max="100000">
-            <input class="btn" type="submit" value="Filtrar">
+            <input type="number" name="maxPrice" id="maxPrice" placeholder="precio max por noche" min="0" max="1000000" value="1000000">
+            <input class="btn" type="submit" value="Buscar">
+            <label for="maxPersons">¿Cuantas personas?</label>
+            <input type="number" name="maxPersons" id="maxPersons" placeholder="no. max de personas" min="1" max="99" value="1">
+            <input type="submit" value="Buscar" class="btn">
+            <label for="country">¿En qué país quieres vivir?</label>
+            <input type="text" name="country" id="country" value="">
+            <input type="submit" value="Buscar" class="btn">
+            <label for="availableDates">¿Qué fechas buscas?</label>
+            <input type="date" name="availableDates" id="availableDates" value="">
+            <input type="submit" value="Buscar" class="btn">
         </form>
     </div>
     <div class="gallery">
@@ -26,42 +35,89 @@
                 <article class="photo-article">
                     <header class="photo-title">
                         <p><%= ap.title %></p>
+                        <p><%= ap.coordinates.country %></p>
                     </header>
                     <div class="photo-frame">
                         <img class="photo" src="<%= ap.photo %>" alt="">
                     </div>
                     <footer class="photo-footer">
                         <p class="photo-description"><%= ap.description %></p>
-                        <div class="rules">
-                            <div class="pets-rules">
-                                <% if(ap.rules.pets) { %>
-                                    <i class="fa-solid fa-dog" id="pets-allowed"></i>
-                                <% } else { %>
-                                    <i class="fa-solid fa-dog" id="pets-prohibited"></i>
-                                <% } %>
+                        <h3 class="rules-title">Servicios incluidos</h3>
+                            <div class="rules">
+                                <div>
+                                    <% if(ap.amenities.wifi) { %>
+                                        <i class="fa-solid fa-wifi amenities-true"></i>
+                                    <% } else { %>                            
+                                        <i class="fa-solid fa-wifi amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(ap.amenities.airConditioner) { %>
+                                        <i class="fa-solid fa-temperature-arrow-down amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-temperature-arrow-down amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(ap.amenities.kitchen) { %>
+                                        <i class="fa-solid fa-kitchen-set amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-kitchen-set amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(ap.amenities.disability) { %>
+                                        <i class="fa-brands fa-accessible-icon amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-brands fa-accessible-icon amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(ap.amenities.heater) { %>
+                                        <i class="fa-solid fa-temperature-arrow-up amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-temperature-arrow-up amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(ap.amenities.tv) { %>
+                                        <i class="fa-solid fa-tv amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-tv amenities-false"></i>
+                                    <% } %>
+                                </div>
                             </div>
-                            <div class="parties-rules">
-                                <% if(ap.rules.parties) { %>
-                                    <i class="fa-solid fa-champagne-glasses" id="parties-allowed"></i>
-                                <% } else { %>
-                                    <i class="fa-solid fa-champagne-glasses" id="parties-prohibited"></i>
-                                <% } %>
+                        <h3 class="rules-title">Reglas</h3>
+                            <div class="rules">
+                                <div class="pets-rules">
+                                    <% if(ap.rules.pets) { %>
+                                        <i class="fa-solid fa-dog rules-allowed"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-dog rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                                <div class="parties-rules">
+                                    <% if(ap.rules.parties) { %>
+                                        <i class="fa-solid fa-champagne-glasses rules-allowed" ></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-champagne-glasses rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                                <div class="smoking-rules">
+                                    <% if(ap.rules.smoking) { %>
+                                        <i class="fa-solid fa-smoking rules-allowed"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-smoking rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                                <div class="music-rules">
+                                    <% if(ap.rules.music) { %>
+                                        <i class="fa-solid fa-music rules-allowed"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-music rules-prohibited"></i>
+                                    <% } %>
+                                </div>
                             </div>
-                            <div class="smoking-rules">
-                                <% if(ap.rules.smoking) { %>
-                                    <i class="fa-solid fa-smoking" id="smoking-allowed" ></i>
-                                <% } else { %>
-                                    <i class="fa-solid fa-smoking" id="smoking-prohibited"></i>
-                                <% } %>
-                            </div>
-                            <div class="music-rules">
-                                <% if(ap.rules.music) { %>
-                                    <i class="fa-solid fa-music" id="music-allowed"></i>
-                                <% } else { %>
-                                    <i class="fa-solid fa-music" id="music-prohibited"></i>
-                                <% } %>
-                            </div>
-                        </div>   
                         <p class="photo-price">$<%= ap.price %>*noche</p>
                         <div class="size-coordinates">
                             <p class="photo-size"><%= ap.squareMeters %>m2</p>

@@ -85,7 +85,13 @@ const apartmentSchema = new Schema({
             type: Number,
             required: false
         }
-    }   
+    },
+    reservations: [
+        {
+            startDate: { type: Date, required: true },
+            endDate: { type: Date, required: true }
+        }
+    ]
 });
 
 const Apartment = model('Apartment', apartmentSchema);

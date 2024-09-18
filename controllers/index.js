@@ -27,17 +27,49 @@ const getApartmentById = async(req, res) => {
 };
 
 //Buscar apartamentos. Parsear la query string
+// const searchApartments = async (req, res) => {
+//     // Paso 3: buscar apartamentos. Parsear la query string que recibo del formulario
+    
+//     const { maxPrice, maxPersons, city } = req.query;
+
+//     // Obtener del modelo todos los apartamentos cuyo precio sea menor que el precio máximo que el usuario está dispuesto a pagar
+
+//     // Pasarle estos apartamentos ya filtrados a la vista
+//     const apartments = await Apartment.find({ 
+//         price: { $lte:  maxPrice },
+//         persons: { $gte: maxPersons }
+//     });
+
+//     const cities = await Apartment.find({
+//         coordinates.city: {  }
+//     })
+
+//     res.render('home', {
+//     apartments
+//     });
+// }
+
 const searchApartments = async (req, res) => {
-    // Paso 3: buscar apartamentos. Parsear la query string que recibo del formulario
-    const { maxPrice } = req.query;
+    try{
+        const { maxPrice, maxPersons, country } = req.query;
+        if(!maxPrice || !maxPersons) {
+            return res.status(400).send('Por favor, ingresa un precio máximo y un número de personas')
+        }
+        const query = {
+            price: { $lte: maxPrice },
+            persons: { $gte: maxPersons }
+        };
+        if(country) {
+            query['coordinates.country'] = country;
+        }
+        
+        const apartments = await Apartment.find(query);
 
-    // Obtener del modelo todos los apartamentos cuyo precio sea menor que el precio máximo que el usuario está dispuesto a pagar
-
-    // Pasarle estos apartamentos ya filtrados a la vista
-    const apartments = await Apartment.find({ price: { $lte:  maxPrice } });
-    res.render('home', {
-    apartments
-    });
+        res.render('home', { apartments });
+    } catch (error) {
+        console.error('Error al buscar en la base de datos de apartamentos', error);
+        res.status(500).send('Ocurrió un error al filtrar')
+    }
 }
 
 const postNewReservation = async (req, res) => {

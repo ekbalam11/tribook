@@ -63,12 +63,12 @@ const postNewApartment = async (req, res) => {
         music: req.body['rules.music'] === 'true',
     };
     const amenities = {
-        wifi: wifi,
-        airConditioner: airConditioner,
-        kitchen: kitchen,
-        disability: disability,
-        heater: heater,
-        tv: tv
+        wifi: req.body['amenities.wifi'] === 'true',
+        airConditioner: req.body['amenities.airConditioner'] === 'true',
+        kitchen: req.body['amenities.kitchen'] === 'true',
+        disability: req.body['amenities.disability'] === 'true',
+        heater: req.body['amenities.heater'] === 'true',
+        tv: req.body['amenities.tv'] === 'true',
     };
     console.log('rules: ', rules);
     console.log('amenities: ', amenities);
@@ -84,7 +84,7 @@ const postNewApartment = async (req, res) => {
         bathrooms: req.body.bathrooms,
         persons: req.body.persons,
         photo: req.body.photo,
-        amenities: req.body.amenities,
+        amenities: amenities,
         coordinates: coordinates,
         country: country,
         province: province,

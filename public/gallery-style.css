@@ -26,10 +26,14 @@
     max-width: 1500px; /* Set a maximum width to prevent it from getting too wide */
     margin: 5vw auto 15vw auto;
 }
+.gallery h3{
+  font-size: 1rem;
+  margin-top: 1rem;
+}
 .photo-article {
     padding: 1rem;
     /* aspect-ratio: 3 / 2; */
-    height: 750px; /* Adjust as needed */
+    height: auto; /* Adjust as needed */
     margin-bottom: 20px;
     /*overflow: hidden;  Crop images */
     background-color: rgb(164, 164, 164);
@@ -46,7 +50,7 @@ a:-webkit-any-link{
     width: 100%;
     height: 300px;
     object-fit: cover; /* Crop and center images */
-    border: 2px solid black;
+    /* border: rgb(94, 94, 94) 2px solid; */
 }
 .search-form{
   margin: 20px 10% 20px 10%;
@@ -65,11 +69,47 @@ a:-webkit-any-link{
 .photo-description {
   font-size: 1rem;
   height: 4rem ;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+  border: rgb(94, 94, 94) 2px solid;
 }
+/* ---------------------------rules & amenities*/
+.rules{
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.rules-title{
+  color: darkslategrey;
+  text-align: center;
+  padding-bottom: 1vw;
+}
+.rules-allowed{
+  color: darkolivegreen;
+  font-weight: 800;
+}
+.rules-prohibited{
+  color: darkred;
+  font-weight: 200;
+}
+.amenities-true{
+  color: darkslategray;
+  font-weight: 800;
+  font-size: 2rem;
+}
+.amenities-false{
+  color: gray;
+  font-weight: 200;
+  font-weight: 0.8rem;
+  text-decoration:line-through
+}
+/* ------------------------price and measures */
 .photo-price{
   background-color: darkgoldenrod ;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 800;
+  margin-top: 1vw;
 }
 .photo-size{
   font-weight: 500;
@@ -78,6 +118,7 @@ a:-webkit-any-link{
 .size-coordinates{
   padding-top: 1rem;
   height: 4rem;
+  font-size: 1rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -88,7 +129,7 @@ a:-webkit-any-link{
   top: 10px; 
   left: 10px;
   max-height: 2rem;
-	font-size:0.75em;
+	font-size:1vw;
 	font-weight:bold;
 	text-decoration:none;
 	color:#633e18;
@@ -116,33 +157,4 @@ a:-webkit-any-link{
 		inset 0 1px 0 #faeaba,
 		0 1px 1px rgba(0,0,0,.1);
 	z-index:100;
-}
-.rules{
-  display: flex;
-  justify-content: space-evenly;
-  padding: 1rem;
-}
-#pets-allowed{
-  color: darkolivegreen;
-}
-#pets-prohibited{
-  color: darkred;
-}
-#parties-allowed{
-  color: darkolivegreen;
-}
-#parties-prohibited{
-  color: darkred;
-}
-#smoking-allowed{
-  color: darkolivegreen;
-}
-#smoking-prohibited{
-  color: darkred;
-}
-#music-allowed{
-  color: darkolivegreen;
-}
-#music-prohibited{
-  color: darkred;
 }
