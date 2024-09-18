@@ -1,16 +1,19 @@
 // Importamos el modelo
 const Apartment = require('../models/apartments.model.js')
 const Reservation = require('../models/reservation.model.js')
+const Users = require('../models/user.model.js')
 
 const getApartments = async (req, res) => {
     
     //Obtenemos todos los apartamentos de la base de datos
     const apartments = await Apartment.find();
-    
+    const users = await Users.find();
+
     //Registro de visitas al sitio
     req.session.visitedHome += 1;
 
     res.render('home', {
+        users,
         apartments,
         visitedHome: req.session.visitedHome 
     })
@@ -51,13 +54,13 @@ const getApartmentById = async(req, res) => {
 
 const searchApartments = async (req, res) => {
     try{
-        const { maxPrice, maxPersons, country } = req.query;
-        if(!maxPrice || !maxPersons) {
+        const { maxPrice, minPersons, country } = req.query;
+        if(!maxPrice || !minPersons) {
             return res.status(400).send('Por favor, ingresa un precio máximo y un número de personas')
         }
         const query = {
             price: { $lte: maxPrice },
-            persons: { $gte: maxPersons }
+            persons: { $gte: minPersons }
         };
         if(country) {
             query['coordinates.country'] = country;

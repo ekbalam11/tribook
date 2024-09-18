@@ -23,15 +23,16 @@ const checkIfEmailExists = async(email) => {
 };
 
 const postSignup = async (req, res) => {
-    const { email, password } = req.body;
+    const { name,email, password } = req.body;
     try {
         const emailExists = await checkIfEmailExists(email);
         if(emailExists) {
             return res.status(400).json({ message: 'este correo está en uso.' });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10); //Encriptación de la contraseña
         const newUser = new User({
             email,
+            name,
             password: hashedPassword,
             isAdmin: true
         });
@@ -62,16 +63,16 @@ const postLoginForm = async (req, res) => {
         }
 
         req.session.isAuthenticated = true;
-        req.locals.isAdmin = true;
-
+        req.session.isAdmin = authenticatedUser.isAdmin;
+        req.session.user = authenticatedUser;
+        // console.log('authenticatedUser', authenticatedUser)
+        // console.log('req.session.isAdmin', req.session.isAdmin)
         res.redirect('/');
     } catch (error) {
         console.error('Error en el login: ', error);
         res.status(500).json({ message: 'Error en el servidor durante el login' });
     }
 };
-
-
 
 
 

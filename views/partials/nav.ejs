@@ -1,4 +1,5 @@
 <div class="container"></div>
+
     <nav>
             <div class="header-text">
                 <!-- <p id="who_i_am">Who am I?</p> -->
@@ -17,9 +18,11 @@
             <li><a href="/signup">Regístrate</a></li>   
             <% } %>   
         </ul>
-        <p class="login-text"> <% if(isAdmin) { %>
+        <p class="login-text"> <% if(isAuthenticated) { %>
+          
             <p><a href="/logout" class="button-logout">Logout</a></p>
-            <h1 class="welcome-sign">Bienvenido "${USER}" </h1>
+            <h1 class="welcome-sign">Bienvenido <%= user.name %>! </h1>
+   
             <% } else { %> 
               <a class="btn" id="login-btn" href="/login">Login</a> 
             <% } %> 
