@@ -1,1 +1,11 @@
-tag = tipo de vivienda
+-Vista detallada apartamento
+    -todos los detalles
+    -más de 1 foto
+-Conexión con mapa por coordenadas
+    -convertidor de coordenadas
+    -detalles en puntos dentro del mapa
+-Implementación de fechas
+    -fechas en formulario de POST
+    -fechas disponibles en reserva
+-almacenamiento de fotos en cloudinary
+    -pasar la URL directo a la BD

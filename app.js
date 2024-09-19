@@ -12,6 +12,8 @@ const indexRoutes = require('./routes/index.js');
 const adminRoutes = require('./routes/admin.js');
 //auto routes
 const authRoutes = require('./routes/auth.js');
+//rest api routes
+const apiRoutes = require('./routes/api.js')
 
 //Express server instance
 const app = express();
@@ -56,7 +58,8 @@ app.use('/admin', (req, res, next) => {
 //routes 
 app.use('/', indexRoutes);
 app.use('/admin', adminRoutes);
-app.use(authRoutes); //'./routes/auth.js'
+app.use(authRoutes);
+app.use('/api', apiRoutes)
 
 
 //Mongoose connection:
