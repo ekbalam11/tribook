@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>🐆-Tribook</title>
+  <%- include('./partials/head.ejs') %>
+
+
+</head>
+
+<body>
+  <div class="container">
+
+    <h2>Login</h2>
+
+    <form action="/login" method="POST">
+
+      <label> email:</label>
+      <input type="email" name="email" placeholder="email" required />
+
+      <label>Contraseña:</label>
+      <input  type="password" name="password" placeholder="********" required/>
+
+      <button type="submit" class="btn2">Iniciar sesión</button>
+    </form>
+  </div>
+
+</body>

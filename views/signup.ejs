@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>🐆-Tribook</title>
+  <%- include('./partials/head.ejs') %>
+
+
+</head>
+
+<body>
+  <div class="container">
+
+
+    <h1>Registrarse</h1>
+
+    <form action="/signup" method="POST">
+      <label for="name">Nombre</label>
+      <input type="text" name="name" id="name" placeholder="Nombre de usuario" required>
+      <label> Email:</label>
+      <input type="email" name="email" placeholder="email" required />
+
+      <label>Contraseña:</label>
+      <input  type="password" name="password" placeholder="********" required/>
+      <p>La contraseña debe tener mínimo 8 símbolos, 1 letra en mayúscula, 1 en minúscula, 1 número y 1 símbolo especial</p>
+      <button type="submit" class="btn2">Registro</button>
+    </form>
+  </div>
+
+</body>
