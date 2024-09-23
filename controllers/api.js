@@ -1,25 +1,28 @@
-const Apartment = require('../models/apartments.model')
+const { validationResult } = require('express-validator');
+const Apartment = require('../models/apartments.model');
+const constants = require('../config/constants');
+
 
 const getApartments = async(req, res) => {
   try{
 
-    const limit = parseInt(req.query.limit) || 10; //el límite por default será 10 pero cambiará de acuerdo a la querystring que pida el cliente
+    const limit = parseInt(req.query.limit) || constants.MAX_DOCUMENTS; //el límite por default será 10 pero cambiará de acuerdo a la querystring que pida el cliente
     console.log(limit);
     console.log(typeof(limit))
 
-    //Comprobar el valor del parámetro req.query.limit que esté entre 1 y 100000
-    if(req.query.limit<1 || req.query.limit>100000) {
-        res.status(400).json({
-        message: "the limit parameter must be a number between 1 and 100000"
-    })
-}
-    if(typeof req.query.limit != Number ) {
-        return res.status(400).json({
-        message: "the limit parameter must be a Number"
-});
-}
-
-
+//     //Comprobar el valor del parámetro req.query.limit que esté entre 1 y 100000
+//     if(req.query.limit<1 || req.query.limit>MAX_DOCUMENTS) {
+//         res.status(400).json({
+//         message: "the limit parameter must be a number between 1 and 100000"
+//     })
+// }
+    const result = validationResult(req);
+    //Si validation result devuelve algún valor significa que ha y algún parámetro que no pasa la validación
+    if(!result.isEmpty()) {
+      return res.status(400).json({
+        message: result.array()[0].msg
+      })
+    }
 
     const apartments = await Apartment.find().limit(limit);
     console.log('apartments: ', apartments);
