@@ -8,7 +8,8 @@ const router = express.Router();
 
 //Crear primer endpoint de administrador que es el que nos permite mostrar un formulario para añadir un nuevo apartamento
 const adminControllers = require('../controllers/admin.js');
-const indexControllers = require('../controllers/index.js')
+const indexControllers = require('../controllers/index.js');
+const cloudinaryControllers = require('../controllers/cloudinary.js')
 
 //Todas las rutas de administrador, si entramos por '/admin' significa que el usuario es de tipo de administrador. CAmbiemos el valor de la variable res.locals.isAdmin
 
@@ -22,7 +23,7 @@ router.post('/apartment/new-apartment', adminControllers.postNewApartment);
 router.get('/apartment/:idApartment/edit', adminControllers.getEditApartmentForm);
 // router.post('/:idApartment/edit', adminControllers.postEditApartmentForm)
 router.get('/apartment/:idApartment', indexControllers.getApartmentById);
-
+router.post('/apartment/new-apartment/new-photo', cloudinaryControllers.postNewPhoto)
 
 
 //Exportar estas rutas para que sean usadas en app.js

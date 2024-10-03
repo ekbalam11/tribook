@@ -13,6 +13,11 @@
     </header>
     <!-- <button id="upload_widget" class="cloudinary-button">Subir fotos</button> -->
     <div class="container">
+        <form action="/admin/apartment/new-apartment/new-photo" method="POST">
+            <label for="file">Select file to upload</label>
+            <input type="file" id="photo" name="photo">
+            <input type="submit" value="Subir foto" name="submit">
+        </form>
         <form action="/admin/apartment/new-apartment" method="POST">
             <label for="title">Nombre del anuncio</label>
             <input type="text" id="id" name="id" value="<%= apartment.id %>" hidden>

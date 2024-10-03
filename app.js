@@ -2,7 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv');
 dotenv.config()
 
@@ -70,8 +69,8 @@ async function connectDB() {
 connectDB().catch(err => console.log(err));
 
 //Cloudinary config
-const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
+// const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+// const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
 
 
 //Server init

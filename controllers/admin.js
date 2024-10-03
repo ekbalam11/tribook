@@ -1,6 +1,7 @@
 //Aquí creamos un conjunto de funciones que van a dar respuesta a nuestras rutas
 const Apartment = require('../models/apartments.model.js')
 
+
 const getNewApartmentForm = (req, res) => {
     const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
     const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
