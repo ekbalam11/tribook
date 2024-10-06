@@ -17,6 +17,8 @@ router.get('/apartment/:idApartment', indexControllers.getApartmentById)
 // Pedir una nueva reserva
 router.post('/apartment/new-reservation', indexControllers.postNewReservation);
 
+router.get('/apartment/reservation-summary', indexControllers.postNewReservation)
+
 
 //Tenemos que exportar estas rutas para que sean usadas en app.js
 module.exports = router;

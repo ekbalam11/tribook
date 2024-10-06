@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const flash = require('connect-flash');
 const dotenv = require('dotenv');
 dotenv.config()
 
@@ -19,6 +20,8 @@ const app = express();
 
 //Middleware to process post requests with Express
 app.use(express.urlencoded({ extended: true }));
+
+app.use(flash())
 
 //Session config
 app.use(session({
@@ -69,8 +72,8 @@ async function connectDB() {
 connectDB().catch(err => console.log(err));
 
 //Cloudinary config
-// const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-// const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
 
 
 //Server init

@@ -29,28 +29,6 @@ const getApartmentById = async(req, res) => {
     })
 };
 
-//Buscar apartamentos. Parsear la query string
-// const searchApartments = async (req, res) => {
-//     // Paso 3: buscar apartamentos. Parsear la query string que recibo del formulario
-    
-//     const { maxPrice, maxPersons, city } = req.query;
-
-//     // Obtener del modelo todos los apartamentos cuyo precio sea menor que el precio máximo que el usuario está dispuesto a pagar
-
-//     // Pasarle estos apartamentos ya filtrados a la vista
-//     const apartments = await Apartment.find({ 
-//         price: { $lte:  maxPrice },
-//         persons: { $gte: maxPersons }
-//     });
-
-//     const cities = await Apartment.find({
-//         coordinates.city: {  }
-//     })
-
-//     res.render('home', {
-//     apartments
-//     });
-// }
 
 const searchApartments = async (req, res) => {
     try{
@@ -76,22 +54,56 @@ const searchApartments = async (req, res) => {
 }
 
 const postNewReservation = async (req, res) => {
-    // 1. Hacer una peticion tipo POST -> desestructurar el req.body y obtener todos los datos de la reserva
-    const { email, startDate, endDate, idApartment } = req.body;
-    const apartment = await Apartment.findById(idApartment)
-    // Método 2a. Dado el Id del apartamento, recuperar el apartment de la colección y luego crear la reserva con Reservation.create() pasando el apartmento que acabamos de recuperar. 
-    const newReservation = await Reservation.create({  //Importante no olvidar importar el modelo "const Reservation = require('../models/reservation.model.js')"
-        email,
-        startDate,
-        endDate,
-        apartment
-    })
+    let apartment;
+    try {
+        // Extract reservation details from the request body
+        const { email, startDate, endDate, idApartment } = req.body;
 
+        apartment = await Apartment.findById(idApartment);
+        
+        if (!apartment) {
+            return res.status(404).json({ error: "Apartment not found" });
+        }
 
-    res.json(newReservation);
-    // Método 2b. Crear directamente la reserva con Reservation.create() y establecer el campo apartment, que de tipo ObjectID, con el idntificador del apartamento recuperado del formulario.
+     
+        const reservations = await getApartmentReservations(idApartment);
+        console.log('reservations: ', reservations); 
 
-    // 3. Podemos contestar con algún tipo de mensaje al usuario sobre la reservada creada. e.g res.json(newReservation) newReservation es la reserva que acabamos de crear
+        const conflictes = await Reservation.findOne({
+            apartment: idApartment,
+            $or: [
+              { startDate: { $lt: endDate }, endDate: { $gt: startDate } }
+            ]
+          });
+          console.log('conflictes: ', conflictes)
+
+          if (conflictes) {
+            req.flash('error', 'Fechas de la reserva no disponibles');
+          return  res.redirect(`/apartment/${idApartment}`); 
+          } else {
+      
+        const newReservation = await Reservation.create({
+            email,
+            startDate,
+            endDate,
+            apartment
+        });
+
+        return res.render('reservation-summary', {
+            reservation: newReservation,
+            selectedApartment: apartment,
+            errorMessage: req.flash('error'),
+        });
+    }
+    } catch (err) {
+      
+        console.error(err);
+        req.flash('error', "Reserva no creada, por favor, añade datos válidos.") 
+        return res.render('detail-apartment', {
+            errorMsg: req.flash('error'),
+            selectedApartment: apartment
+        })
+    }
 }
 
 module.exports = {

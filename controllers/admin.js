@@ -94,8 +94,49 @@ const postNewApartment = async (req, res) => {
     res.send('Apartamento creado <a href="/"><button type= "submit"> Ir a home </button></a> <a href="/admin/apartment/new-apartment"><button type= "submit"> Subir otro anuncio </button></a>')
 }
 
+const postUnpublishApartment = async (req, res) => {
+    try {
+      const { idApartment } = req.params;
+      // Find and update the apartment to unpublish it
+      const selectedApartment = await Apartment.findByIdAndUpdate(idApartment, {
+        isPublished: false, // Mark apartment as unpublished
+        unpublishedAt: new Date(), // Record the unpublish date
+      });
+      req.flash("success", "Apartamento despublicado con éxito");
+      return res.redirect("/"); // Redirect to homepage on success
+    } catch (error) {
+      console.log(error);
+      // Redirect with error message
+      req.flash("error", "Error despublicando apartamento");
+      return res.redirect("/");
+    }
+  };
+
+const postPublishApartment =
+  ("/apartments/:id/publish",
+  async (req, res) => {
+    try {
+      const { idApartment } = req.params;
+        // Find and update the apartment to publish it
+      const selectedApartment = await Apartment.findByIdAndUpdate(idApartment, {
+        isPublished: true, // Mark apartment as published
+        unpublishedAt: null, // Reset the unpublish date
+      });
+      req.flash("success", "Apartamento publicado con éxito");
+      // Redirect to homepage on success
+      return res.redirect("/");
+    } catch (error) {
+      console.log(error);
+    // Redirect with error message
+      req.flash("error", "Error publicando apartamento");
+      return res.redirect("/");
+    }
+  });
+
 module.exports = {
     getNewApartmentForm,
     postNewApartment,
-    getEditApartmentForm
+    getEditApartmentForm,
+    postUnpublishApartment,
+    postPublishApartment
 }

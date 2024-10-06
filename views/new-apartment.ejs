@@ -13,11 +13,6 @@
     </header>
     <!-- <button id="upload_widget" class="cloudinary-button">Subir fotos</button> -->
     <div class="container">
-        <form action="/admin/apartment/new-apartment/new-photo" method="POST">
-            <label for="file">Select file to upload</label>
-            <input type="file" id="photo" name="photo">
-            <input type="submit" value="Subir foto" name="submit">
-        </form>
         <form action="/admin/apartment/new-apartment" method="POST">
             <label for="title">Nombre del anuncio</label>
             <input type="text" id="id" name="id" value="<%= apartment.id %>" hidden>
@@ -74,10 +69,10 @@
              <input type="number" name="persons" id="persons" min="1" required>
             <!-- -----------------------Photo -->
             <div class="photo-upload">
-                <label for="photo">Carga una foto desde tu dispositivo</label>
-                <button id="upload_widget" class="cloudinary-button">Cargar foto</button>
+                <!-- <label for="photo">Carga una foto desde tu dispositivo</label>
+                <button id="upload_widget" class="cloudinary-button">Cargar foto</button> -->
                 <label for="photo">Agrega una URL con la foto de tu apartamento</label>
-                <input type="url" name="photo" id="photo">
+                <input type="url" name="photo" id="photo" placeholder="la URL de tu apartamento">
             </div>
             <!-- ---------------------------Amenities -->
             <label for="amenities">¿Qué hay en la vivienda?</label>
@@ -113,10 +108,10 @@
         </form>
     </div>
 
-    <script src="https://upload-widget.cloudinary.com/latest/global/all.js" type="text/javascript"></script>
+    <!-- <script src="https://upload-widget.cloudinary.com/latest/global/all.js" type="text/javascript"></script>
     <script type="text/javascript">
-        const cloudName = '<%= cloudName %>'
-        const uploadPreset = '<%= uploadPreset %>'
+        const cloudName = 
+        const uploadPreset = 
 
 var myWidget = cloudinary.createUploadWidget({
         cloudName: cloudName,
@@ -130,7 +125,7 @@ var myWidget = cloudinary.createUploadWidget({
 document.getElementById("upload_widget").addEventListener("click", function () {
     myWidget.open();
 }, false);
-    </script>
+    </script> -->
 
 </body>
 

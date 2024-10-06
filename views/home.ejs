@@ -143,18 +143,49 @@
 <!------------------ maps ----------------->
 <div id="map">
     <iframe width="425" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=2.180120944976807%2C41.42314791802191%2C2.201299667358399%2C41.442838972931746&amp;layer=mapnik&amp;marker=41.43299419211502%2C2.1907103061676025" style="border: 1px solid black"></iframe><br/><small>
-        <span class="btn">
+        <!-- <span class="btn">
             <a id="map-text" href="https://www.openstreetmap.org/?mlat=41.4330&amp;mlon=2.1907#map=16/41.4330/2.1907">Ver el mapa en otra ventana</a></small>
-        </span>
+        </span> -->
 </div>
-
-
-
-
-
 <script>
 
-</script>
+    const { getApartments } = require('./controllers/index')
 
+// Replace with your actual map container ID
+  const map = L.map('map').setView([41.40338, 2.17403], 13); // Initial view coordinates (adjust if needed)
+
+
+  // Add a base layer (e.g., OpenStreetMap)
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  getApartments()
+  .then(apartments => {
+    createMarkers(apartments);
+    console.log("🚀 ~ apartments:", apartments)
+  })
+  
+  .catch(error => {
+    console.error('Error fetching apartments: ', error)
+  });
+
+
+  
+
+  // Function to create markers from apartment data (modify as needed)
+  function createMarkers(apartments) {
+    for (const ap of apartments) {
+      const marker = L.marker([ap.coordinates.latitude, ap.coordinates.longitude]);
+      // Optionally, add a popup with apartment details
+      marker.bindPopup(`
+        <h3>${ap.title}</h3>
+        <p>${ap.country}, ${ap.city}</p>
+      `);
+      marker.addTo(map);
+    }
+  }
+
+</script>
 </body>
 </html>

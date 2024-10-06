@@ -18,24 +18,117 @@
         <div><%= selectedApartment.description %></div>
         <footer><%= selectedApartment.squareMeters %><sup>m2</sup></footer>
     </article>
+    <h3 class="rules-title">Servicios incluidos</h3>
+                            <div class="rules">
+                                <div>
+                                    <% if(selectedApartment.amenities.wifi) { %>
+                                        <i class="fa-solid fa-wifi amenities-true"></i>
+                                    <% } else { %>                            
+                                        <i class="fa-solid fa-wifi amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(selectedApartment.amenities.airConditioner) { %>
+                                        <i class="fa-solid fa-temperature-arrow-down amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-temperature-arrow-down amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(selectedApartment.amenities.kitchen) { %>
+                                        <i class="fa-solid fa-kitchen-set amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-kitchen-set amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(selectedApartment.amenities.disability) { %>
+                                        <i class="fa-brands fa-accessible-icon amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-brands fa-accessible-icon amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(selectedApartment.amenities.heater) { %>
+                                        <i class="fa-solid fa-temperature-arrow-up amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-temperature-arrow-up amenities-false"></i>
+                                    <% } %>
+                                </div>
+                                <div>
+                                    <% if(selectedApartment.amenities.tv) { %>
+                                        <i class="fa-solid fa-tv amenities-true"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-tv amenities-false"></i>
+                                    <% } %>
+                                </div>
+                            </div>
+                        <h3 class="rules-title">Reglas</h3>
+                            <div class="rules">
+                                <div class="pets-rules">
+                                    <% if(selectedApartment.rules.pets) { %>
+                                        <i class="fa-solid fa-dog rules-allowed"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-dog rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                                <div class="parties-rules">
+                                    <% if(selectedApartment.rules.parties) { %>
+                                        <i class="fa-solid fa-champagne-glasses rules-allowed" ></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-champagne-glasses rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                                <div class="smoking-rules">
+                                    <% if(selectedApartment.rules.smoking) { %>
+                                        <i class="fa-solid fa-smoking rules-allowed"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-smoking rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                                <div class="music-rules">
+                                    <% if(selectedApartment.rules.music) { %>
+                                        <i class="fa-solid fa-music rules-allowed"></i>
+                                    <% } else { %>
+                                        <i class="fa-solid fa-music rules-prohibited"></i>
+                                    <% } %>
+                                </div>
+                            </div>
+                        <p class="photo-price">$<%= selectedApartment.price %>*noche</p>
+                        <div class="size-coordinates">
+                            <p class="photo-size"><%= selectedApartment.squareMeters %>m2</p>
+                            <div class="coordinates">
+                                <p id="latitude">Latitud: <%= selectedApartment.coordinates.latitude %></p>
+                                <p id="longitude">Longitud: <%= selectedApartment.coordinates.longitude %></p>
+                            </div>
+                        </div>
     <footer>
-    <% if (isAdmin) { %>
-        <a href="/admin/<%= selectedApartment._id %>/edit/">Edita este anuncio</a>
-        <% } else { %> <!-- Si el usuario no es admin -->
-        <!-- To do 1. Crear los controles de formulario necesarios para realizar la reserva: email, fecha de inicio, fecha de fin.
-        Este formulario debería realizar una petición de tipo POST a /apartment/new-reservation. Acordaos que hay que pasar el identificador del apartamento en un <input:hidden>. ***Mirar la vista new-apartment.ejs -->
-        <h2>Nueva reserva</h2>
-        <form action="/apartment/new-reservation" method="POST">
-          <input type="hidden" name="idApartment" value="<%= selectedApartment._id %>">
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" required>
-          <label for="startDate">Fecha de inicio</label>
-          <input type="date" name="startDate" id="startDate" required>
-          <label for="endDate">Fecha de fin</label>
-          <input type="date" name="endDate" id="endDate">
-          <input type="submit" value="Reservar">          
-        </form>
-            <p>Mostrar botón de reservar con sus campos de fecha de inicio... fecha de fin, etc... </p>
+      <div class="reservation-form">
+        <% if (isAdmin) { %>
+            <button><a href="/admin/apartment/<%= selectedApartment._id %>/edit/">Editar apartamento</a></button>
+            <% if (selectedApartment.isPublished) { %>
+                <form action="/admin/apartment/<%= selectedApartment._id %>/unpublish" method="POST">
+                    <button type="submit">Despublicar apartamento</button>
+                </form>
+            <% } else { %>
+                <form action="/admin/apartment/<%= selectedApartment._id %>/publish" method="POST">
+                    <button type="submit">Publicar apartamento</button>
+                </form>
             <% } %>
+     
+            <% } else { %>
+                <h2>Datos de la reserva</h2>
+                <form action="/apartment/new-reservation" method="post">
+                    <input type="hidden" name="idApartment" value="<%= selectedApartment._id %>">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required>
+                    <label for="startDate">Fecha de inicio </label>
+                    <input type="date" name="startDate" id="startDate">
+                    <label for="endDate">Fecha de fin</label>
+                    <input type="date" name="endDate" id="endDate">
+                    <input type="submit" value="Reservar">
+                </form>
+                <% } %>
+    </div>
     </footer>
 </body>
