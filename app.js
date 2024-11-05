@@ -18,7 +18,7 @@ const apiRoutes = require('./routes/api.js')
 //Express server instance
 const app = express();
 
-//Middleware to process post requests with Express
+//Middleware to process post requests with Express for FORMS
 app.use(express.urlencoded({ extended: true }));
 
 app.use(flash())

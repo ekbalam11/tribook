@@ -1,6 +1,5 @@
 //Crear esquema del apartamento
 const { Schema, model } = require('mongoose');
-const { type } = require('os');
 
 const apartmentSchema = new Schema({
     title: {
